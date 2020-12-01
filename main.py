@@ -4,7 +4,8 @@
 # TODO: error checking in needed functions
 # TODO: access modifiers
 
-import helper
+import movie_utils
+import printer
 import constants
 
 # from tmdbv3api import TMDb
@@ -12,56 +13,6 @@ import constants
 import requests
 import dateutil.parser as date_parser
 import datetime
-
-#
-# def initIds(films):
-#
-#     for film in films:
-#         if(film.Id == None):
-#             film.id = getImdbId(film)
-#
-#     return films
-#
-#
-# def getImdbId(film):
-
-# def getDetails():
-
-
-
-# tmdb = TMDb()
-# tmdb.api_key = 'cca18093a5d24304779e745f384197a1'
-# tmdb.language = 'en'
-# tmdb.debug = True
-# Environment variable: export TMDB_API_KEY='YOUR_API_KEY'
-
-# movie = Movie(76341)
-
-# print(str(movie))
-
-# recommendations = movie.recommendations(movie_id=111)
-#
-# for recommendation in recommendations:
-#     print(recommendation.title)
-#     print(recommendation.overview)
-#
-def get_film_details(film, details, list_details):
-
-    movie_id = get_movie_id(film)
-    movie_details = helper.get_movie_details(movie_id)
-    movie_details = helper.trim_dict(movie_details, details, list_details)
-
-    return movie_details
-
-
-def get_movie_id(film):
-
-    # NOTE
-    #   movie_id will sought from films
-    #   if(movie_id == None) get IMDB id
-    movie_id = 76341
-
-    return movie_id
 
 
 def post_call_work(movie_details):
@@ -97,18 +48,8 @@ def additional_details(movie_details):
     return movie_details
 
 
-
-
-def pretty_print(d, indent=0):
-    for key, value in d.items():
-          print('\t' * indent + str(key))
-          if isinstance(value, dict):
-             pretty_print(value, indent+1)
-          else:
-
-             print('\t' * (indent+1) + str(value))
-
 # MAIN:
-d = get_film_details(None, constants.MOVIE_KEYS, constants.LIST_KEYS)
-d = post_call_work(d)
-pretty_print(d)
+if __name__ == "__main__":
+    d = movie_utils.get_specific_movie_details(76341, constants.MOVIE_KEYS, constants.LIST_KEYS)
+    d = post_call_work(d)
+    printer.pretty_print_dict(d)

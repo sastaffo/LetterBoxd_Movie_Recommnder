@@ -1,13 +1,15 @@
 import constants
 import requests
 
+def get_movie_url(id):
+     return constants.TMDB_MOVIE_URL.format(movie_id = id)
+
 def get_movie_details(movie_id):
 
     if movie_id == None:
         return None
 
-    # request = "{}{}?api_key={}".format(constants.TMDB_URL, movie_id, constants.API_KEY)
-    request = "https://api.themoviedb.org/3/movie/76341?api_key=cca18093a5d24304779e745f384197a1"
+    request = get_movie_url(movie_id)
     response = requests.request("GET", request)
 
     if not response.ok:

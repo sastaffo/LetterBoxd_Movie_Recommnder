@@ -44,7 +44,7 @@ def additional_details(movie_details):
         curr_year = datetime.datetime.now().year
         release_year = movie_details["release_year"]
         movie_details["movie_age"] = curr_year - release_year
-
+ 
     return movie_details
 
 # Main function

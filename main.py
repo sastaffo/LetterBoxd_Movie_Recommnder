@@ -112,7 +112,7 @@ def main():
         time.sleep(random.randint(15, 30))
         result["films_details"].append(d)
 
-    json_utils.write_to_file(result, "tmdb_film_details")
+    json_utils.write_to_file(result, "tmdb_film_details.json")
 
     # country = pycountry.countries.search_fuzzy('England')
     # country_code = country.alpha_2

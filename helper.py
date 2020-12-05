@@ -2,7 +2,10 @@ import constants
 # import requests
 
 def get_movie_url(id):
-     return constants.TMDB_MOVIE_URL.format(movie_id = id)
+    return constants.TMDB_MOVIE_URL.format(movie_id = id)
+
+def get_company_url(id):
+    return constants.TMDB_COMPANY_URL.format(company_id = id)
 
 
 def trim_dict(dict, keys, list_keys):

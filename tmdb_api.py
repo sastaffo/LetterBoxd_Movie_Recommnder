@@ -37,3 +37,15 @@ def __get_movie_details(movie_id):
         return None
 
     return response.json()
+
+
+def get_parent_company(company_id):
+
+    request = helper.get_company_url(company_id)
+    response = requests.request("GET", request)
+
+    if not response.ok:
+        print("Failed")
+        return None
+
+    return response.json()["parent_company"]

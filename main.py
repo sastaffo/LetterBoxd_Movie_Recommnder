@@ -9,6 +9,7 @@ import printer
 import constants
 import tmdb_api
 import json_utils
+import country_info
 
 # from tmdbv3api import TMDb
 # from tmdbv3api import Movie
@@ -17,7 +18,7 @@ import dateutil.parser as date_parser
 import datetime
 import time
 import random
-
+import pycountry
 
 def post_call_work(movie_details):
 
@@ -48,8 +49,35 @@ def additional_details(movie_details):
         curr_year = datetime.datetime.now().year
         release_year = movie_details["release_year"]
         movie_details["movie_age"] = curr_year - release_year
+        decade = (int) (release_year/10)
+        decade = decade * 10
+        movie_details["release_decade"] = decade
+
+    #TODO: error checking
+    if "production_companies" in movie_details:
+        parent_companies = []
+        for company_details in movie_details["production_companies"]:
+            company_id = company_details["id"]
+            parent_company = tmdb_api.get_parent_company(company_id)
+            parent_companies.append(parent_company)
+        movie_details["parent_companies"] = parent_companies
+
+    #TODO: check errors
+    # if "production_countries" in movie_details:
+    #     movie_details["production_country_group"] = []
+    #     for country_dict in movie_details["production_countries"]:
+    #         country_name = country_dict["name"]
+    #         country_code = pycountry.country_name_to_country_alpha2(country_name, cn_name_format = "default")
+    #         continent_name = pycountry.country_alpha2_to_continent_code(country_code)
+    #         movie_details["production_country_group"].append({"name":continent_name})
 
     return movie_details
+
+# def find_continent(country_code):
+#
+#     for country_dict in country_info.countries:
+#         if country_dict["code"] == country_code:
+#             return country_dict["continent"]
 
 # Main function
 def main():
@@ -86,8 +114,12 @@ def main():
 
     json_utils.write_to_file(result, "tmdb_film_details")
 
-    print(i)
-    print(len(result["films_details"]))
+    # country = pycountry.countries.search_fuzzy('England')
+    # country_code = country.alpha_2
+    # find_continent(country_code)
+
+    # print(i)
+    # print(len(result["films_details"]))
 
     # print(len(tmdb_ids["film_list"]))
 

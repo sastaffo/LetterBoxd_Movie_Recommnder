@@ -10,6 +10,7 @@ import constants
 import tmdb_api
 import json_utils
 import country_info
+from country_codes import country_codes
 
 # from tmdbv3api import TMDb
 # from tmdbv3api import Movie
@@ -18,7 +19,8 @@ import dateutil.parser as date_parser
 import datetime
 import time
 import random
-import pycountry
+from difflib import SequenceMatcher
+# import pycountry
 
 def post_call_work(movie_details):
 
@@ -91,32 +93,59 @@ def main():
     #   Print to json doc
     #   Wait 15-30 seconds
 
-    result = { "films_details": [] }
+    # # NOTE: START
+    # result = { "films_details": [] }
+    #
+    # tmdb_ids = json_utils.read_from_file("letterbox_data/films")
+    # print(tmdb_ids)
+    # i = 1
+    # for film in tmdb_ids["film_list"]:
+    #     if film == None:
+    #         continue
+    #     # print(str(i) + ": " + film["lid"] + ", " + film["name"] + ", " + film["tmdb_id"])
+    #     movie_id = film["tmdb_id"]
+    #     d = tmdb_api.get_selective_movie_details(movie_id, constants.MOVIE_KEYS, constants.LIST_KEYS)
+    #     d["name"] = film["name"]
+    #     d["lid"] = film["lid"]
+    #     d["tmdb_id"] = movie_id
+    #     d = post_call_work(d)
+    #     # printer.pretty_print_dict(d)
+    #     print("Film number " + str(i) + " parsed, with lid " + str(film["lid"]))
+    #     i = i + 1
+    #     time.sleep(random.randint(15, 30))
+    #     result["films_details"].append(d)
+    #
+    # json_utils.write_to_file(result, "tmdb_film_details.json")
+    # # NOTE: END
 
-    tmdb_ids = json_utils.read_from_file("letterbox_data/films")
-    print(tmdb_ids)
-    i = 1
-    for film in tmdb_ids["film_list"]:
-        if film == None:
-            continue
-        # print(str(i) + ": " + film["lid"] + ", " + film["name"] + ", " + film["tmdb_id"])
-        movie_id = film["tmdb_id"]
-        d = tmdb_api.get_selective_movie_details(movie_id, constants.MOVIE_KEYS, constants.LIST_KEYS)
-        d["name"] = film["name"]
-        d["lid"] = film["lid"]
-        d["tmdb_id"] = movie_id
-        d = post_call_work(d)
-        # printer.pretty_print_dict(d)
-        print("Film number " + str(i) + " parsed, with lid " + str(film["lid"]))
-        i = i + 1
-        time.sleep(random.randint(15, 30))
-        result["films_details"].append(d)
+    # # NOTE: GOOGLE MAPS: WORKS
+    # country = "united kinGDom"
+    # url = "https://maps.googleapis.com/maps/api/geocode/json?components=country:{country}&key={key}".format(country = country, key = "AIzaSyC2L6z8n-ZzW74DgYQP8i5jxWPEjQOtXZs")
+    # response = requests.request("GET", url)
+    #
+    # if not response or not response.json()["status"] == "OK":
+    #     print("You're a failure Shaun :D")
+    #     return
+    # else:
+    #     print response.json()["results"][0]["address_components"][0]["short_name"]
 
-    json_utils.write_to_file(result, "tmdb_film_details.json")
+    # NOTE: DIFF RATIO = 0.6: WORKS
+    # print SequenceMatcher(None, "united states of america".lower(), "United States".lower()).ratio()
 
-    # country = pycountry.countries.search_fuzzy('England')
-    # country_code = country.alpha_2
-    # find_continent(country_code)
+    # # NOTE: GOOGLE MAPS WITH FILE FOR CONTINENT: WORKS BUT USE THE RIGHT COUNTRY NAME
+    # country = "united states"
+    # url = "https://maps.googleapis.com/maps/api/geocode/json?components=country:{country}&key={key}".format(country = country, key = "AIzaSyC2L6z8n-ZzW74DgYQP8i5jxWPEjQOtXZs")
+    # response = requests.request("GET", url)
+    #
+    # short_name = ""
+    #
+    # if not response or not response.json()["status"] == "OK":
+    #     print("You're a failure Shaun :D")
+    #     return
+    # else:
+    #     short_name =  response.json()["results"][0]["address_components"][0]["short_name"]
+    #     print country_codes[short_name]
+
 
     # print(i)
     # print(len(result["films_details"]))

@@ -64,6 +64,32 @@ def additional_details(movie_details):
             parent_companies.append(parent_company)
         movie_details["parent_companies"] = parent_companies
 
+    if "production_countries" in movie_details:
+        movie_details["production_country_group"] = []
+        for country_dict in movie_details["production_countries"]:
+            country_name = country_dict["name"].lower()
+            for country in country_info.countries:
+                curr_country_name = country["name"].lower()
+                curr_country_name = unicode(curr_country_name, "utf-8")
+                same_country = (country_name in curr_country_name) or (curr_country_name in country_name)
+                if same_country:
+                    continent = country["continent"]
+                    movie_details["production_country_group"].append(continent)
+                    break
+
+
+            # url = "https://maps.googleapis.com/maps/api/geocode/json?components=country:{country}&key={key}".format(country = country, key = "AIzaSyC2L6z8n-ZzW74DgYQP8i5jxWPEjQOtXZs")
+            # response = requests.request("GET", url)
+            #
+            # short_name = ""
+            #
+            # if not response or not response.json()["status"] == "OK":
+            #     print("You're a failure Shaun :D")
+            #     return
+            # else:
+            #     short_name =  response.json()["results"][0]["address_components"][0]["short_name"]
+            #     print country_codes[short_name]
+
     #TODO: check errors
     # if "production_countries" in movie_details:
     #     movie_details["production_country_group"] = []
@@ -93,30 +119,32 @@ def main():
     #   Print to json doc
     #   Wait 15-30 seconds
 
-    # # NOTE: START
-    # result = { "films_details": [] }
-    #
-    # tmdb_ids = json_utils.read_from_file("letterbox_data/films")
-    # print(tmdb_ids)
-    # i = 1
-    # for film in tmdb_ids["film_list"]:
-    #     if film == None:
-    #         continue
-    #     # print(str(i) + ": " + film["lid"] + ", " + film["name"] + ", " + film["tmdb_id"])
-    #     movie_id = film["tmdb_id"]
-    #     d = tmdb_api.get_selective_movie_details(movie_id, constants.MOVIE_KEYS, constants.LIST_KEYS)
-    #     d["name"] = film["name"]
-    #     d["lid"] = film["lid"]
-    #     d["tmdb_id"] = movie_id
-    #     d = post_call_work(d)
-    #     # printer.pretty_print_dict(d)
-    #     print("Film number " + str(i) + " parsed, with lid " + str(film["lid"]))
-    #     i = i + 1
-    #     time.sleep(random.randint(15, 30))
-    #     result["films_details"].append(d)
-    #
-    # json_utils.write_to_file(result, "tmdb_film_details.json")
-    # # NOTE: END
+    # NOTE: START
+    result = { "films_details": [] }
+
+    tmdb_ids = json_utils.read_from_file("letterbox_data/films")
+    print(tmdb_ids)
+    i = 1
+    for film in tmdb_ids["film_list"]:
+        if film == None:
+            continue
+        # print(str(i) + ": " + film["lid"] + ", " + film["name"] + ", " + film["tmdb_id"])
+        if i == 30:
+            break
+        movie_id = film["tmdb_id"]
+        d = tmdb_api.get_selective_movie_details(movie_id, constants.MOVIE_KEYS, constants.LIST_KEYS)
+        d["name"] = film["name"]
+        d["lid"] = film["lid"]
+        d["tmdb_id"] = movie_id
+        d = post_call_work(d)
+        # printer.pretty_print_dict(d)
+        print("Film number " + str(i) + " parsed, with lid " + str(film["lid"]))
+        i = i + 1
+        time.sleep(random.randint(15, 30))
+        result["films_details"].append(d)
+
+    json_utils.write_to_file(result, "tmdb_film_details.json")
+    # NOTE: END
 
     # # NOTE: GOOGLE MAPS: WORKS
     # country = "united kinGDom"

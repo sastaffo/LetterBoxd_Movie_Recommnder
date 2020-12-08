@@ -13,10 +13,11 @@ from bs4 import BeautifulSoup
 from requests_html import HTMLSession
 from letterboxd_film_scrapper.get_list_of_films import extract_number
 
-BASE_URL = "https://letterboxd.com%s"
+BASE_URL = "https://letterboxd.com"
 users = []
 STRING_WITHIN_CURLY_BRACKETS_REGEX = '{.*}'
 invalid_film_list = []
+GET_USERS = True
 
 class Films():
     
@@ -43,31 +44,37 @@ class Film():
         self.number_of_views = number_of_views
 
 
+def export_details_for_film_url(page_url):
+    film_url = page_url.replace(BASE_URL, "")
+    film_details = get_film_details(film_url, page_url)
+    output_to_json("searched_films/%s"%(film_details.lid), {film_details.lid : film_details})
+
 def iterate_through_genres(genres_folder):
     directory = os.fsencode(genres_folder)
         
     for file in os.listdir(directory):
         genre_films = Films()
         filename = os.fsdecode(file)
-        if filename.startswith('a') or filename.startswith('c') or filename.startswith('d'):
-            continue
         with open("%s/%s"%(genres_folder, filename), 'r') as f:
-            genre_details = json.load(f)
-        get_film_details_for_genre(genre_films, genre_details)
+            genre_list_of_films = json.load(f)
+        get_film_details_for_genre(genre_films, genre_list_of_films)
         
-        print("Outputting results for %s"%(genre_details['name']))
-        output_to_json("films/users_%s"%(genre_details['name']), users)
-        output_to_json("films/films_%s"%(genre_details['name']), genre_films)
+        print("Outputting results for %s"%(genre_list_of_films['name']))
+        output_to_json("users/users_%s2"%(genre_list_of_films['name']), users)
+        output_to_json("films/films_%s2"%(genre_list_of_films['name']), genre_films)
+
         
         genre_wait_time = random.randint(0, 20)
         time.sleep(genre_wait_time)
-    output_to_json("invalid_films/invalid_films", invalid_film_list)
+    # Output a list of films which we couldn't get the details of
+    output_to_json("invalid_films/still_invalid_films_first_half", invalid_film_list)
             
-def get_film_details_for_genre(films, genre_details):
-    film_list = genre_details['film_list']
+def get_film_details_for_genre(films, genre_list_of_films):
+    film_list = genre_list_of_films['film_list']
     for film in film_list:
         try:
-            film_details = get_film_details(film)
+            page_url = "%s%s"%(BASE_URL, film['url'])
+            film_details = get_film_details(film['url'], page_url)
             films.store_film(film_details)
             page_wait_time = random.randint(0, 10)
             time.sleep(page_wait_time)
@@ -75,12 +82,7 @@ def get_film_details_for_genre(films, genre_details):
             print("Invalid movie %s"%(film['name']))
             invalid_film_list.append(film)
     
-def get_film_details(film_info):
-    film_url = film_info['url']
-    film_lid = film_info['letterboxd_id']
-    film_name = film_info['name']
-    
-    page_url = BASE_URL%(film_url)
+def get_film_details(film_url, page_url):
     print("Getting page %s"%(page_url))
     session = HTMLSession()
     page = session.get(page_url)
@@ -89,17 +91,24 @@ def get_film_details(film_info):
     film_json = soup.find(type="application/ld+json")
     info_json = get_info_in_curly_brackets(film_json.contents[0])
     
-    aggregate_rating = info_json["aggregateRating"]
+    poster_info = soup.find(attrs = {"data-component-class" : "globals.comps.FilmPosterComponent"})
+    if poster_info is None:
+        print("Couldn't find poster:\n%s"%(film_url))
+        raise ValueError()
+    film_name = poster_info.get("data-film-name")
+    film_lid = poster_info.get("data-film-id")
+
+    aggregate_rating = info_json.get("aggregateRating")
     if aggregate_rating is None:
-        print("Movie doesn't have enough ratings")
+        print("Film %s doesn't have enough ratings"%(film_name))
         raise TypeError()
     number_of_ratings = aggregate_rating["ratingCount"]
     avg_rating = aggregate_rating["ratingValue"]
     genres = info_json["genre"]
     director_url = info_json["director"][0]["sameAs"]
     
-    actors_json = info_json["actors"]
-    if actors_json: # Not all movies have actors
+    actors_json = info_json.get("actors")
+    if actors_json: # Not all films have actors
         actors_urls = [actor["sameAs"] for actor in actors_json]
     else:
         actors_urls = []
@@ -120,16 +129,17 @@ def get_member_page_info(page_url, film_url):
     page = session.get(members_list_url)
     soup = BeautifulSoup(page.content, 'html.parser')
 
-    user_table = soup.find(class_="person-table film-table")
-    user_table_body = user_table.find("tbody")
-    user_list = user_table_body.findAll("tr")
-    for user in user_list:
-        user_rating = user.find(class_="film-detail-meta rating-green")
-        if user_rating:
-            user_info = user.find(class_="follow-button-wrapper js-follow-button-wrapper")
-            username = user_info.get("data-username")
-            users.append(username)
-            break
+    if GET_USERS:
+        user_table = soup.find(class_="person-table film-table")
+        user_table_body = user_table.find("tbody")
+        user_list = user_table_body.findAll("tr")
+        for user in user_list:
+            user_rating = user.find(class_="film-detail-meta rating-green")
+            if user_rating:
+                user_info = user.find(class_="follow-button-wrapper js-follow-button-wrapper")
+                username = user_info.get("data-username")
+                users.append(username)
+                break
 
     likes_info = soup.find(attrs={"href" : "%slikes/"%(film_url)})
     number_of_likes = extract_number(likes_info["title"])
@@ -146,9 +156,10 @@ def get_info_in_curly_brackets(info):
     return json_output
 
 def output_to_json(filename, obj):
-    with open("%s.json"%(filename), 'w') as f:
+    with open("../%s.json"%(filename), 'w') as f:
         json_format = jsonpickle.encode(obj, unpicklable=False)
         print(json_format, file=f)
 
 if __name__ == '__main__':
-    iterate_through_genres("film_genres")
+    iterate_through_genres("../film_genres")
+    #export_details_for_film_url("https://letterboxd.com/film/shrek/")

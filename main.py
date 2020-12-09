@@ -116,9 +116,6 @@ def main():
         film = films[lid]
         if film == None:
             continue
-        # print(str(i) + ": " + film["lid"] + ", " + film["name"] + ", " + film["tmdb_id"])
-        if i == 30:
-            break
         movie_id = film["tmdb_id"]
         d = tmdb_api.get_selective_movie_details(movie_id, constants.MOVIE_KEYS, constants.LIST_KEYS)
         print("Parsing film " + str(i) + ", with lid " + str(lid))

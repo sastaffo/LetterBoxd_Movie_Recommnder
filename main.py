@@ -8,9 +8,10 @@ import movie_utils
 import printer
 import constants
 import tmdb_api
-import json_utils
+import helper
 
 import requests
+import json_utils
 import dateutil.parser as date_parser
 import datetime
 import time
@@ -49,20 +50,11 @@ def additional_details(movie_details):
         decade = decade * 10
         movie_details["release_decade"] = decade
 
-    #TODO: error checking
-    if "production_companies" in movie_details:
-        parent_companies = []
-        for company_details in movie_details["production_companies"]:
-            company_id = company_details["id"]
-            parent_company = tmdb_api.get_parent_company(company_id)
-            parent_companies.append(parent_company)
-        movie_details["parent_companies"] = parent_companies
-
     country_groups = json_utils.read_from_file("continent_country_pairs.json")
     if "production_countries" in movie_details:
         movie_details["production_country_group"] = []
-        for country_dict in movie_details["production_countries"]:
-            country_name = country_dict["name"].lower()
+        for country_name in movie_details["production_countries"]:
+            country_name = country_name.lower()
             for country in country_groups:
                 curr_country_name = country["country"].lower()
                 same_country = (country_name in curr_country_name) or (curr_country_name in country_name)
@@ -71,6 +63,8 @@ def additional_details(movie_details):
                     movie_details["production_country_group"].append(continent)
                     break
 
+    if "belongs_to_collection" in movie_details:
+        movie_details["belongs_to_collection"] = helper.trim_dict(movie_details["belongs_to_collection"], ["name", "id"], None)
 
             # url = "https://maps.googleapis.com/maps/api/geocode/json?components=country:{country}&key={key}".format(country = country, key = "AIzaSyC2L6z8n-ZzW74DgYQP8i5jxWPEjQOtXZs")
             # response = requests.request("GET", url)
@@ -114,36 +108,29 @@ def main():
     #   Wait 15-30 seconds
 
     # NOTE: START
-    # result = {}
-    #
-    # tmdb_ids = json_utils.read_from_file("letterbox_data/films")
-    # print(tmdb_ids)
-    # i = 1
-    # for film in tmdb_ids["film_list"]:
-    #     if film == None:
-    #         continue
-    #     # print(str(i) + ": " + film["lid"] + ", " + film["name"] + ", " + film["tmdb_id"])
-    #     if i == 30:
-    #         break
-    #     movie_id = film["tmdb_id"]
-    #     d = tmdb_api.get_selective_movie_details(movie_id, constants.MOVIE_KEYS, constants.LIST_KEYS)
-    #     lid = film["lid"]
-    #     d["name"] = film["name"]
-    #     d["tmdb_id"] = movie_id
-    #     d = post_call_work(d)
-    #     # printer.pretty_print_dict(d)
-    #     print("Film number " + str(i) + " parsed, with lid " + str(film["lid"]))
-    #     i = i + 1
-    #     time.sleep(random.randint(15, 30))
-    #     result[lid] = d
-    #
-    # json_utils.write_to_file(result, "tmdb_film_details.json")
+    result = {}
 
-    # i = 0
-    # for c in result:
-    #     i = i + 1
-    #
-    # print i
+    tmdb_ids = json_utils.read_from_file("letterbox_data/films")
+    i = 1
+    for film in tmdb_ids["film_list"]:
+        if film == None:
+            continue
+        # print(str(i) + ": " + film["lid"] + ", " + film["name"] + ", " + film["tmdb_id"])
+        if i == 30:
+            break
+        movie_id = film["tmdb_id"]
+        d = tmdb_api.get_selective_movie_details(movie_id, constants.MOVIE_KEYS, constants.LIST_KEYS)
+        lid = film["lid"]
+        d["name"] = film["name"]
+        d["tmdb_id"] = movie_id
+        d = post_call_work(d)
+        # printer.pretty_print_dict(d)
+        print("Film number " + str(i) + " parsed, with lid " + str(film["lid"]))
+        i = i + 1
+        time.sleep(random.randint(15, 30))
+        result[lid] = d
+
+    json_utils.write_to_file(result, "tmdb_film_details.json")
 
     continents_countries = {}
     country_groups = json_utils.read_from_file("continent_country_pairs.json")
@@ -156,12 +143,6 @@ def main():
         continents_countries[continent].append(country)
 
     json_utils.write_to_file(continents_countries, "countries_by_continent.json")
-
-    # TODO: Clean:
-    # 1. Production countries
-    # 2. Belongs to collection (name, id)
-    # 3. Production companies (name, id)
-    # 4. Production countries and country groups should have a similar format
     # NOTE: END
 
 

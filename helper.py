@@ -10,6 +10,13 @@ def get_company_url(id):
 
 def trim_dict(dict, keys, list_keys):
 
+    if keys is None or dict is None:
+        return dict
+
+    return_list = False
+    if len(keys) == 1:
+        return dict[keys[0]]
+
     trimmed_dict = {}
 
     for key in keys:
@@ -17,7 +24,7 @@ def trim_dict(dict, keys, list_keys):
 
         if key in dict:
             val = dict[key]
-            if key in list_keys and isinstance(val, list):
+            if list_keys is not None and key in list_keys and isinstance(val, list):
                 val = trim_dicts_in_lists(val, list_keys[key])
 
         trimmed_dict[key] = val
@@ -34,6 +41,6 @@ def trim_dicts_in_lists(list, keys):
 
     for elem in list:
         if isinstance(elem, dict):
-            trimmed_list.append(trim_dict(elem, keys, ""))
+            trimmed_list.append(trim_dict(elem, keys, None))
 
     return trimmed_list

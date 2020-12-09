@@ -9,8 +9,8 @@ import printer
 import constants
 import tmdb_api
 import json_utils
-import country_info
-from country_codes import country_codes
+import country_groups
+# from country_codes import country_codes
 
 # from tmdbv3api import TMDb
 # from tmdbv3api import Movie
@@ -68,8 +68,8 @@ def additional_details(movie_details):
         movie_details["production_country_group"] = []
         for country_dict in movie_details["production_countries"]:
             country_name = country_dict["name"].lower()
-            for country in country_info.countries:
-                curr_country_name = country["name"].lower()
+            for country in country_groups.country_groups:
+                curr_country_name = country["country"].lower()
                 curr_country_name = unicode(curr_country_name, "utf-8")
                 same_country = (country_name in curr_country_name) or (curr_country_name in country_name)
                 if same_country:

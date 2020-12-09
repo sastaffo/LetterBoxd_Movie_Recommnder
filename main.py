@@ -114,7 +114,7 @@ def main():
     #   Wait 15-30 seconds
 
     # NOTE: START
-    result = { "films_details": [] }
+    result = {}
 
     tmdb_ids = json_utils.read_from_file("letterbox_data/films")
     print(tmdb_ids)
@@ -135,9 +135,15 @@ def main():
         print("Film number " + str(i) + " parsed, with lid " + str(film["lid"]))
         i = i + 1
         time.sleep(random.randint(15, 30))
-        result["films_details"].append(d)
+        result[film["lid"]] = d
 
     json_utils.write_to_file(result, "tmdb_film_details.json")
+
+    # i = 0
+    # for c in result:
+    #     i = i + 1
+    #
+    # print i
     # NOTE: END
 
 

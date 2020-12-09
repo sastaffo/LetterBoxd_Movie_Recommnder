@@ -110,9 +110,10 @@ def main():
     # NOTE: START
     result = {}
 
-    tmdb_ids = json_utils.read_from_file("letterbox_data/films")
+    films = json_utils.read_from_file("letterbox_data/films.json")
     i = 1
-    for film in tmdb_ids["film_list"]:
+    for lid in films:
+        film = films[lid]
         if film == None:
             continue
         # print(str(i) + ": " + film["lid"] + ", " + film["name"] + ", " + film["tmdb_id"])
@@ -120,12 +121,13 @@ def main():
             break
         movie_id = film["tmdb_id"]
         d = tmdb_api.get_selective_movie_details(movie_id, constants.MOVIE_KEYS, constants.LIST_KEYS)
-        lid = film["lid"]
+        print("Parsing film " + str(i) + ", with lid " + str(lid))
+        if d is None:
+            d = {}
         d["name"] = film["name"]
         d["tmdb_id"] = movie_id
         d = post_call_work(d)
         # printer.pretty_print_dict(d)
-        print("Film number " + str(i) + " parsed, with lid " + str(film["lid"]))
         i = i + 1
         time.sleep(random.randint(15, 30))
         result[lid] = d
@@ -179,7 +181,7 @@ def main():
     # print(i)
     # print(len(result["films_details"]))
 
-    # print(len(tmdb_ids["film_list"]))
+    # print(len(films["film_list"]))
 
 # Code Execution Control point
 if __name__ == "__main__":

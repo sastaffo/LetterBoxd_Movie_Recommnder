@@ -21,7 +21,7 @@ country_groups = [
 {'continent': 'Africa', 'country': 'Benin'},
 {'continent': 'Asia', 'country': 'Brunei Darussalam'},
 {'continent': 'South America', 'country': 'Bolivia'},
-{'continent': 'South America', 'country': 'Brazil'},
+{'continent': 'South America (Portuguese)', 'country': 'Brazil'},
 {'continent': 'North America', 'country': 'Bahamas'},
 {'continent': 'Asia', 'country': 'Bhutan'},
 {'continent': 'Africa', 'country': 'Botswana'},
@@ -193,5 +193,5 @@ country_groups = [
 {'continent': 'Africa', 'country': 'Swaziland'},
 {'continent': 'Europe', 'country': 'Switzerland'},
 {'continent': 'Asia', 'country': 'United Arab Emirates'},
-{'continent': 'Europe', 'country': 'United Kingdom'},
+{'continent': 'Europe', 'country': 'United Kingdom'}
 ]

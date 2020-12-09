@@ -9,18 +9,12 @@ import printer
 import constants
 import tmdb_api
 import json_utils
-from continents_by_countries import country_groups
-# from country_codes import country_codes
 
-# from tmdbv3api import TMDb
-# from tmdbv3api import Movie
 import requests
 import dateutil.parser as date_parser
 import datetime
 import time
 import random
-from difflib import SequenceMatcher
-# import pycountry
 
 def post_call_work(movie_details):
 
@@ -64,13 +58,13 @@ def additional_details(movie_details):
             parent_companies.append(parent_company)
         movie_details["parent_companies"] = parent_companies
 
+    country_groups = json_utils.read_from_file("continent_country_pairs.json")
     if "production_countries" in movie_details:
         movie_details["production_country_group"] = []
         for country_dict in movie_details["production_countries"]:
             country_name = country_dict["name"].lower()
             for country in country_groups:
                 curr_country_name = country["country"].lower()
-                curr_country_name = unicode(curr_country_name, "utf-8")
                 same_country = (country_name in curr_country_name) or (curr_country_name in country_name)
                 if same_country:
                     continent = country["continent"]
@@ -144,19 +138,9 @@ def main():
         result["films_details"].append(d)
 
     json_utils.write_to_file(result, "tmdb_film_details.json")
-
-
-    continents_countries = {}
-    for country_dict in country_groups:
-        continent_list = []
-        continent = country_dict["continent"]
-        country = country_dict["country"]
-        if continent not in continents_countries:
-            continents_countries[continent] = []
-        continents_countries[continent].append(country)
-
-    json_utils.write_to_file(continents_countries, "countries_by_continent.json")
     # NOTE: END
+
+
 
     # # NOTE: GOOGLE MAPS: WORKS
     # country = "united kinGDom"

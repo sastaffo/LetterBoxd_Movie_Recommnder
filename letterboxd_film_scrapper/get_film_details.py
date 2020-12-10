@@ -16,6 +16,7 @@ from letterboxd_film_scrapper.get_list_of_films import extract_number
 BASE_URL = "https://letterboxd.com"
 users = []
 STRING_WITHIN_CURLY_BRACKETS_REGEX = '{.*}'
+STRING_WITHIN_BACKSLASHES_REGEX = '/*/'
 invalid_film_list = []
 GET_USERS = True
 
@@ -30,7 +31,7 @@ class Films():
         
 class Film():
     
-    def __init__(self, name, url, lid, tmdb_id, number_of_ratings, avg_rating, genres, director_url, actors_urls, number_of_likes, number_of_views):
+    def __init__(self, name, url, lid, tmdb_id, number_of_ratings, avg_rating, genres, director, actors, number_of_likes, number_of_views):
         self.name = name
         self.url = url
         self.lid = lid
@@ -38,8 +39,8 @@ class Film():
         self.number_of_ratings = number_of_ratings
         self.avg_rating = avg_rating
         self.genres = genres
-        self.director_url = director_url
-        self.actors_urls = actors_urls
+        self.director = director
+        self.actors = actors
         self.number_of_likes = number_of_likes
         self.number_of_views = number_of_views
 
@@ -104,23 +105,28 @@ def get_film_details(film_url, page_url):
         raise TypeError()
     number_of_ratings = aggregate_rating["ratingCount"]
     avg_rating = aggregate_rating["ratingValue"]
-    genres = info_json["genre"]
+    genres = [genre.lower() for genre in info_json["genre"]]
     director_url = info_json["director"][0]["sameAs"]
+    director_name = convert_actor_urls_to_name(director_url)
     
     actors_json = info_json.get("actors")
     if actors_json: # Not all films have actors
         actors_urls = [actor["sameAs"] for actor in actors_json]
+        actors_names = convert_actor_urls_to_name(actors_urls)
     else:
-        actors_urls = []
+        actors_names = []
     
     number_of_likes, number_of_views = get_member_page_info(page_url, film_url)
     
     tmdb = soup.find(attrs={"data-tmdb-type" : "movie"})
     tmdb_id = tmdb.get("data-tmdb-id")
+    if tmdb_id == "":
+        print("Not a valid movie as it is a TV show")
+        raise ValueError()
     
     return Film(name = film_name, url = film_url, lid = film_lid, tmdb_id = tmdb_id, number_of_ratings = number_of_ratings, avg_rating = avg_rating, genres = genres, \
-                director_url = director_url, actors_urls = actors_urls, number_of_likes = number_of_likes, number_of_views = number_of_views)
-    
+                director = director_name, actors = actors_names, number_of_likes = number_of_likes, number_of_views = number_of_views)
+   
 def get_member_page_info(page_url, film_url):
     session = HTMLSession()
     members_list_url = "%smembers"%(page_url)
@@ -146,6 +152,17 @@ def get_member_page_info(page_url, film_url):
     views_info = soup.find(attrs={"href" : "%smembers/"%(film_url)})
     number_of_views = extract_number(views_info["title"])
     return number_of_likes, number_of_views
+
+def convert_actor_urls_to_name(actor_urls):
+    actor_names = []
+    for actor_url in actor_urls:
+        actor_name = convert_url_to_name(actor_url)
+        actor_names.append(actor_name)
+    return actor_names
+ 
+def convert_url_to_name(url):
+    parts_of_url = url.split("/")
+    return parts_of_url[2]
 
 def get_info_in_curly_brackets(info):
     match = re.search(STRING_WITHIN_CURLY_BRACKETS_REGEX, info)

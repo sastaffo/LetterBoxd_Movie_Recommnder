@@ -17,11 +17,13 @@ def merge_films():
         film_list = films['film_list']
         if type(film_list) is dict:
             for (lid, film) in film_list.items():
-                all_film_dict[lid] = film
+                if film["tmdb_id"] != "":
+                    all_film_dict[lid] = film
         elif type(film_list) is list:
             for film in film_list:
-                all_film_dict[film['lid']] = film
-    with open("../films/all_films.json", 'w') as f:
+                if film["tmdb_id"] != "":
+                    all_film_dict[film['lid']] = film
+    with open("../all_filmsv3.json", 'w') as f:
         json_format = jsonpickle.encode(all_film_dict, unpicklable=False)
         print(json_format, file=f)
 
@@ -33,7 +35,7 @@ def merge_users():
         with open("../%s/%s"%("users", filename), 'r') as f:
             users = json.load(f)
         all_users += users
-    with open("../users/all_users.json", 'w') as f:
+    with open("../all_usersV2.json", 'w') as f:
         json_format = jsonpickle.encode(all_users, unpicklable=False)
         print(json_format, file=f)
 

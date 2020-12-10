@@ -14,7 +14,7 @@ def export_invalid_film_list():
         print(json_format, file=f)
 
 if __name__ == '__main__':
-    with open("Output.txt", 'r') as f:
+    with open("FirstHalfConsoleOutput.txt", 'r') as f:
         conents = f.readlines()
     last_line = None
     for line in conents:

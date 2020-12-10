@@ -39,16 +39,23 @@ def additional_details(movie_details):
     #TODO: check for errors here
     if "release_date" in movie_details:
         release_date = movie_details["release_date"]
-        movie_details["release_year"] = date_parser.parse(release_date).year
+        if date_parser.parse(release_date, fuzzy = True):
+            movie_details["release_year"] = date_parser.parse(release_date).year
+        else:
+            movie_details["release_year"] = ""
 
     #TODO: check for errors here
     if "release_year" in movie_details:
-        curr_year = datetime.datetime.now().year
-        release_year = movie_details["release_year"]
-        movie_details["movie_age"] = curr_year - release_year
-        decade = (int) (release_year/10)
-        decade = decade * 10
-        movie_details["release_decade"] = decade
+        if date_parser.parse(release_date, fuzzy = True):
+            curr_year = datetime.datetime.now().year
+            release_year = movie_details["release_year"]
+            movie_details["movie_age"] = curr_year - release_year
+            decade = (int) (release_year/10)
+            decade = decade * 10
+            movie_details["release_decade"] = decade
+        else:
+            movie_details["movie_age"] = ""
+            movie_details["release_decade"] = ""
 
     country_groups = json_utils.read_from_file("continent_country_pairs.json")
     if "production_countries" in movie_details:

@@ -17,6 +17,20 @@ import datetime
 import time
 import random
 
+def is_date(string, fuzzy=False):
+    """
+    Return whether the string can be interpreted as a date.
+
+    :param string: str, string to check for date
+    :param fuzzy: bool, ignore unknown tokens in string if True
+    """
+    try:
+        date_parser.parse(string, fuzzy=fuzzy)
+        return True
+
+    except ValueError:
+        return False
+
 def post_call_work(movie_details):
 
     if not isinstance(movie_details, dict):
@@ -186,6 +200,7 @@ def main():
     # print(len(result["films_details"]))
 
     # print(len(films["film_list"]))
+
 
 # Code Execution Control point
 if __name__ == "__main__":

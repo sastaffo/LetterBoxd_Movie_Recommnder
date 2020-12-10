@@ -39,14 +39,14 @@ def additional_details(movie_details):
     #TODO: check for errors here
     if "release_date" in movie_details:
         release_date = movie_details["release_date"]
-        if date_parser.parse(release_date, fuzzy = True):
+        if date_parser.parse(release_date, fuzzy = False):
             movie_details["release_year"] = date_parser.parse(release_date).year
         else:
             movie_details["release_year"] = ""
 
     #TODO: check for errors here
     if "release_year" in movie_details:
-        if date_parser.parse(release_date, fuzzy = True):
+        if date_parser.parse(release_date, fuzzy = False):
             curr_year = datetime.datetime.now().year
             release_year = movie_details["release_year"]
             movie_details["movie_age"] = curr_year - release_year

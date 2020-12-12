@@ -31,7 +31,7 @@ class Films():
         
 class Film():
     
-    def __init__(self, name, url, lid, tmdb_id, number_of_ratings, avg_rating, genres, director, actors, number_of_likes, number_of_views):
+    def __init__(self, name, url, lid, tmdb_id, number_of_ratings, avg_rating, genres, director, actor, number_of_likes, number_of_views):
         self.name = name
         self.url = url
         self.lid = lid
@@ -40,7 +40,7 @@ class Film():
         self.avg_rating = avg_rating
         self.genres = genres
         self.director = director
-        self.actors = actors
+        self.actor = actor
         self.number_of_likes = number_of_likes
         self.number_of_views = number_of_views
 

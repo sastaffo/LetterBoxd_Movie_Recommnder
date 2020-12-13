@@ -149,8 +149,8 @@ def main():
         i = i + 1
         time.sleep(random.randint(15, 30))
         result[lid] = d
+        json_utils.write_to_file(result, "tmdb_film_details.json")
 
-    json_utils.write_to_file(result, "tmdb_film_details.json")
 
     continents_countries = {}
     country_groups = json_utils.read_from_file("continent_country_pairs.json")

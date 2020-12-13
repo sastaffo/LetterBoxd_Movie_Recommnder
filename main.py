@@ -129,40 +129,52 @@ def main():
     #   Wait 15-30 seconds
 
     # NOTE: START
-    result = {}
+    # result = {}
+    #
+    # films = json_utils.read_from_file("letterbox_data/films.json")
+    # i = 1
+    # for lid in films:
+    #     film = films[lid]
+    #     if film == None:
+    #         continue
+    #     movie_id = film["tmdb_id"]
+    #     d = tmdb_api.get_selective_movie_details(movie_id, constants.MOVIE_KEYS, constants.LIST_KEYS)
+    #     print("Parsing film " + str(i) + ", with lid " + str(lid))
+    #     if d is None:
+    #         d = {}
+    #     d["name"] = film["name"]
+    #     d["tmdb_id"] = movie_id
+    #     d = post_call_work(d)
+    #     # printer.pretty_print_dict(d)
+    #     i = i + 1
+    #     time.sleep(random.randint(15, 30))
+    #     result[lid] = d
+    #     json_utils.write_to_file(result, "tmdb_film_details.json")
+    #
+    #
+    # continents_countries = {}
+    # country_groups = json_utils.read_from_file("continent_country_pairs.json")
+    #
+    # for country_dict in country_groups:
+    #     continent = country_dict["continent"]
+    #     country = country_dict["country"]
+    #     if continent not in continents_countries:
+    #         continents_countries[continent] = []
+    #     continents_countries[continent].append(country)
 
-    films = json_utils.read_from_file("letterbox_data/films.json")
-    i = 1
-    for lid in films:
-        film = films[lid]
-        if film == None:
+    # json_utils.write_to_file(continents_countries, "countries_by_continent.json")
+
+
+    films_data = json_utils.read_from_file("letterbox_data/films.json")
+    cleaned_up_films_data = {}
+
+    for key in films_data:
+        film_data = films_data[key]
+        if film_data["tmdb_id"] == "":
             continue
-        movie_id = film["tmdb_id"]
-        d = tmdb_api.get_selective_movie_details(movie_id, constants.MOVIE_KEYS, constants.LIST_KEYS)
-        print("Parsing film " + str(i) + ", with lid " + str(lid))
-        if d is None:
-            d = {}
-        d["name"] = film["name"]
-        d["tmdb_id"] = movie_id
-        d = post_call_work(d)
-        # printer.pretty_print_dict(d)
-        i = i + 1
-        time.sleep(random.randint(15, 30))
-        result[lid] = d
-        json_utils.write_to_file(result, "tmdb_film_details.json")
+        cleaned_up_films_data[key] = film_data
 
-
-    continents_countries = {}
-    country_groups = json_utils.read_from_file("continent_country_pairs.json")
-
-    for country_dict in country_groups:
-        continent = country_dict["continent"]
-        country = country_dict["country"]
-        if continent not in continents_countries:
-            continents_countries[continent] = []
-        continents_countries[continent].append(country)
-
-    json_utils.write_to_file(continents_countries, "countries_by_continent.json")
+    json_utils.write_to_file(cleaned_up_films_data, "tmdb_film_details.json")
     # NOTE: END
 
 

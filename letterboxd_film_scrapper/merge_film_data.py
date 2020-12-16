@@ -60,4 +60,4 @@ def convert_url_to_name(url):
     return parts_of_url[2]
         
 if __name__ == '__main__':
-    merge_film_info("../all_film_data/all_filmsv3.json", "../all_film_data/4k_films.json", "../all_film_data/all_film_datav2.json")
+    merge_film_info("../all_film_data/all_filmsv3.json", "../all_film_data/all_7867_films_data.json", "../all_film_data/all_film_dataV3.json")

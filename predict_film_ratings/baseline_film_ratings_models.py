@@ -14,7 +14,7 @@ from sklearn.preprocessing import MultiLabelBinarizer
 
 ALL_FILM_DATA_FILE_PATH = "../all_film_data/all_film_data2.json"
 
-# TODO maybe output parameters to a file instaed
+# TODO maybe output parameters to a file instead
 def disp_model_parameters(model):
     print("Theta 0: %0.6f"%(model.intercept_), end = ", ")
     param_num = 1

@@ -1,0 +1,63 @@
+{
+	"user_lid": "vrizov",
+	"user_rating_for_film": 3.5,
+	"user_country": "united states",
+	"user_country_group": "North America",
+	"user_films_watched": 2303,
+	"user_average_rating": 3.0992184107685627,
+	"film_lid": "51890",
+	"film_avg_rating": 3.79,
+	"film_total_views": 337656,
+	"film_total_ratings": 165252,
+	"film_rate_ratio": 0.489409339682991,
+	"film_total_likes": 75563,
+	"film_like_ratio": 0.2237869310777833,
+	"film_prod_companies": [79, 172, 2596, 129, 174],
+	"film_prod_countries": ["united states"],
+	"film_prod_continents": ["North America"],
+	"film_release_year": 2001,
+	"film_release_decade": "2000s",
+	"film_release_month": "12",
+	"film_age": 19,
+	"film_runtime_min": 116,
+	"film_franchise": true,
+	"film_language": null,
+	"user_from_prod_country": true,
+	"user_from_prod_continent": true,
+	"user_director_avg": 3.357142857142857,
+	"user_director_avg_minus": 0.25792444637429446,
+	"user_director_count": 7,
+	"user_genres_avg": [
+		{"crime": 3.0295454545454548},
+		{"thriller": 2.9765886287625416}
+	],
+	"user_genres_avg_minus": [
+		{"crime": -0.06967295622310798},
+		{"thriller": -0.12262978200602115}
+	],
+	"user_genres_count": [
+		{"crime": 220},
+		{"thriller": 299}
+	],
+	"user_actors_avg": [
+		{"actor0": 3.2142857142857144},
+		{"actor1": 3.142857142857143},
+		{"actor2": 3.0},
+		{"actor3": 3.0992184107685627},
+		{"actor4": 3.0992184107685627}
+	],
+	"user_actors_avg_minus": [
+		{"actor0": 0.11506730351715166},
+		{"actor1": 0.043638732088580046},
+		{"actor2": -0.09921841076856275},
+		{"actor3": 0},
+		{"actor4": 0}
+	],
+	"user_actors_count": [
+		{"actor0": 7},
+		{"actor1": 7},
+		{"actor2": 7},
+		{"actor3": 0},
+		{"actor4": 0}
+	]
+}

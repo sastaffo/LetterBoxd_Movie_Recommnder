@@ -45,7 +45,7 @@ def main():
             refined_data.extend(refined_list)
 
     # Write the refined list to a json file
-    with open("refined_film_data", 'w') as fp:
+    with open("refined_film_data.json", 'w') as fp:
         fp.write(json.dumps(refined_data))
 
     # Record end time and print how much time this code took to run

@@ -1,7 +1,0 @@
-
-python helpers/read_write.py
-python global_vars.py
-python helpers/misc_helpers.py
-python helpers/maps_api.py
-python helpers/json_reformatting.py
-python helpers/writing_to_file.py

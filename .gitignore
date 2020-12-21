@@ -1,16 +1,16 @@
-# This Folder's .DS_Store
+# This Folder's .DS_Store (macOS stuff)
 .DS_Store
 
-# DS_Stores in all sub-folders
+# DS_Stores in all sub-folders (macOS stuff)
 */.DS_Store
 
-# This folder's pytest cache
+# The pytest cache
 .pytest_cache/
 
-# This folder's pycache
+# The pycache
 __pycache__/
 
-# All byte code files
+# Python byte code files
 *.pyc
 
 # Private files

@@ -1,6 +1,6 @@
 # shrekommended
 Movie Recommender System using data from Letterboxd and TMDB.
-
+ 
 Different folders contain different parts of the project.
 
 * letterboxd_film_scrapper - has scripts for getting films off Letterboxd.

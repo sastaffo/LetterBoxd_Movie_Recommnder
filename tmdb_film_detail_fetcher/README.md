@@ -1,7 +1,4 @@
-# shrekommended
-Movie Recommender System using data from Letterboxd and TMDB.
-
-Different folders contain different parts of the project.
+# Fetching movie details   
 
 ### Description   
 This gets film details and test film details for the films from the files in letterbox data (which were retrieved by Philip aka XanthusXX)   

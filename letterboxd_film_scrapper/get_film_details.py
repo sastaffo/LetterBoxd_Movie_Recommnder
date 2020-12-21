@@ -61,14 +61,14 @@ def iterate_through_genres(genres_folder):
         get_film_details_for_genre(genre_films, genre_list_of_films)
         
         print("Outputting results for %s"%(genre_list_of_films['name']))
-        output_to_json("users/users_%s2"%(genre_list_of_films['name']), users)
-        output_to_json("films/films_%s2"%(genre_list_of_films['name']), genre_films)
+        output_to_json("test_users/users_%s"%(genre_list_of_films['name']), users)
+        output_to_json("test_films/films_%s"%(genre_list_of_films['name']), genre_films)
 
         
         genre_wait_time = random.randint(0, 20)
         time.sleep(genre_wait_time)
     # Output a list of films which we couldn't get the details of
-    output_to_json("invalid_films/still_invalid_films_first_half", invalid_film_list)
+    output_to_json("invalid_films/test_invalid_films_first_half", invalid_film_list)
             
 def get_film_details_for_genre(films, genre_list_of_films):
     film_list = genre_list_of_films['film_list']
@@ -107,7 +107,7 @@ def get_film_details(film_url, page_url):
     avg_rating = aggregate_rating["ratingValue"]
     genres = [genre.lower() for genre in info_json["genre"]]
     director_url = info_json["director"][0]["sameAs"]
-    director_name = convert_actor_urls_to_name(director_url)
+    director_name = convert_url_to_name(director_url)
     
     actors_json = info_json.get("actors")
     if actors_json: # Not all films have actors
@@ -125,7 +125,7 @@ def get_film_details(film_url, page_url):
         raise ValueError()
     
     return Film(name = film_name, url = film_url, lid = film_lid, tmdb_id = tmdb_id, number_of_ratings = number_of_ratings, avg_rating = avg_rating, genres = genres, \
-                director = director_name, actors = actors_names, number_of_likes = number_of_likes, number_of_views = number_of_views)
+                director = director_name, actor = actors_names, number_of_likes = number_of_likes, number_of_views = number_of_views)
    
 def get_member_page_info(page_url, film_url):
     session = HTMLSession()
@@ -178,5 +178,5 @@ def output_to_json(filename, obj):
         print(json_format, file=f)
 
 if __name__ == '__main__':
-    iterate_through_genres("../film_genres")
+    iterate_through_genres("../test_film_genres")
     #export_details_for_film_url("https://letterboxd.com/film/shrek/")

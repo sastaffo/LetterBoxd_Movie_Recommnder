@@ -1,18 +1,18 @@
 '''
 Created on 7 Dec 2020
 
-@author: bradi
+@author: bradishp
 '''
 import os
 import json
 import jsonpickle
 
-def merge_films():
+def merge_films(dir_path, output_file):
     all_film_dict = {}
-    directory = os.fsencode("../films")
+    directory = os.fsencode(dir_path)
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
-        with open("../films/%s"%(filename), 'r') as f:
+        with open("%s/%s"%(dir_path, filename), 'r') as f:
             films = json.load(f)
         film_list = films['film_list']
         if type(film_list) is dict:
@@ -23,21 +23,22 @@ def merge_films():
             for film in film_list:
                 if film["tmdb_id"] != "":
                     all_film_dict[film['lid']] = film
-    with open("../all_filmsv3.json", 'w') as f:
+    with open(output_file, 'w') as f:
         json_format = jsonpickle.encode(all_film_dict, unpicklable=False)
         print(json_format, file=f)
 
-def merge_users():
+def merge_users(dir_path, output_file):
     all_users = []
-    directory = os.fsencode("../users")
+    directory = os.fsencode(dir_path)
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
-        with open("../%s/%s"%("users", filename), 'r') as f:
+        with open("%s/%s"%(dir_path, filename), 'r') as f:
             users = json.load(f)
         all_users += users
-    with open("../all_usersV2.json", 'w') as f:
+    with open(output_file, 'w') as f:
         json_format = jsonpickle.encode(all_users, unpicklable=False)
         print(json_format, file=f)
 
 if __name__ == '__main__':
-    merge_users()
+    merge_films("../test_films", "../test_all_films.json")
+    merge_users("../test_users", "../test_users.json")

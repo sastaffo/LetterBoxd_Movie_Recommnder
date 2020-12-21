@@ -1,7 +1,7 @@
 '''
 Created on 7 Dec 2020
 
-@author: bradi
+@author: bradishp
 '''
 import re
 import jsonpickle

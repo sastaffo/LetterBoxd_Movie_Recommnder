@@ -1,8 +1,17 @@
 # shrekommended
 Movie Recommender System using data from Letterboxd and TMDB.
- 
+
 Different folders contain different parts of the project.
 
-* letterboxd_film_scrapper - has scripts for getting films off Letterboxd.
-* predict_film_ratings - has a script for predicting the average rating of a letterboxd film based on scrapped data. Something we briefly explored when we weren't definite that we would get meaningful results for user predictions. Ended up not being used.
-* predict_user_rating - has scripts for traning a model to predict a user's rating of a film for a film. Includes code for cross validation.
+### Description   
+This gets film details and test film details for the films from the files in letterbox data (which were retrieved by Philip aka XanthusXX)   
+
+### Run    
+
+**NB: You need a ```keys.py``` file with the variable ```TMDB_KEY``` containing your key for the TMDB API.** This has not been uploaded by us due to security reasons    
+
+```
+python main.py
+```      
+
+Please note that this takes a long time to run, as it waits for 15 to 30 seconds between each API call so as to not spam the API

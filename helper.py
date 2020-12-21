@@ -1,5 +1,8 @@
+"""
+@author: Shaun
+"""
+
 import constants
-# import requests
 
 def get_movie_url(id):
     return constants.TMDB_MOVIE_URL.format(movie_id = id)
@@ -9,6 +12,9 @@ def get_company_url(id):
 
 
 def trim_dict(dict, keys, list_keys):
+    """
+    Make dict smaller - as we need only some details
+    """
 
     if keys is None or dict is None:
         return dict
@@ -33,6 +39,9 @@ def trim_dict(dict, keys, list_keys):
 
 
 def trim_dicts_in_lists(list, keys):
+    """
+    Make some lists in the dictionary smaller (eg: we dont need logo path of a production company)
+    """
 
     if list == None:
         return None

@@ -1,5 +1,12 @@
+"""
+@author: Shaun
+"""
 
+# NOTE: not used in main code but helpful for debugging
 def pretty_print_dict(dictionary, indent = 0):
+    """
+    Pretty prints a dictionary
+    """
 
     tab = "\t"
     for key, value in dictionary.items():

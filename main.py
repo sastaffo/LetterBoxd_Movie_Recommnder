@@ -1,11 +1,9 @@
-# TODO: good code in all files
-# TODO: function comments
-# TODO: separate files (functions and constants)
-# TODO: error checking in needed functions
-# TODO: access modifiers
+"""
+@author: Shaun
+"""
 
+# import printer # - this can be helpful for debugging
 import movie_utils
-import printer
 import constants
 import tmdb_api
 import helper
@@ -16,6 +14,7 @@ import dateutil.parser as date_parser
 import datetime
 import time
 import random
+
 
 def is_date(string, fuzzy=False):
     """
@@ -31,8 +30,11 @@ def is_date(string, fuzzy=False):
     except ValueError:
         return False
 
-def post_call_work(movie_details):
 
+def post_call_work(movie_details):
+    """
+    After getting data from calls, adds additional fields if movie_details received is a dictionary
+    """
     if not isinstance(movie_details, dict):
         return None
 
@@ -40,17 +42,18 @@ def post_call_work(movie_details):
 
 
 def additional_details(movie_details):
+    """
+    Adds the more needed fields which can be calculated based on field values that already exist for the movie dictionary
+    """
 
     if "belongs_to_collection" in movie_details:
         movie_details["in_franchise"] = movie_details["belongs_to_collection"] is not None
 
-    # TODO: Check types here if appropriate
     if "revenue" in movie_details and "budget" in movie_details:
         revenue = movie_details["revenue"]
         budget = movie_details["budget"]
         movie_details["profit"] = revenue - budget
 
-    #TODO: check for errors here
     if "release_date" in movie_details:
         release_date = movie_details["release_date"]
         if is_date(release_date):
@@ -58,7 +61,6 @@ def additional_details(movie_details):
         else:
             movie_details["release_year"] = ""
 
-    #TODO: check for errors here
     if "release_year" in movie_details:
         if is_date(release_date):
             curr_year = datetime.datetime.now().year
@@ -87,43 +89,22 @@ def additional_details(movie_details):
     if "belongs_to_collection" in movie_details:
         movie_details["belongs_to_collection"] = helper.trim_dict(movie_details["belongs_to_collection"], ["name", "id"], None)
 
-            # url = "https://maps.googleapis.com/maps/api/geocode/json?components=country:{country}&key={key}".format(country = country, key = "AIzaSyC2L6z8n-ZzW74DgYQP8i5jxWPEjQOtXZs")
-            # response = requests.request("GET", url)
-            #
-            # short_name = ""
-            #
-            # if not response or not response.json()["status"] == "OK":
-            #     print("You're a failure Shaun :D")
-            #     return
-            # else:
-            #     short_name =  response.json()["results"][0]["address_components"][0]["short_name"]
-            #     print country_codes[short_name]
-
-    #TODO: check errors
-    # if "production_countries" in movie_details:
-    #     movie_details["production_country_group"] = []
-    #     for country_dict in movie_details["production_countries"]:
-    #         country_name = country_dict["name"]
-    #         country_code = pycountry.country_name_to_country_alpha2(country_name, cn_name_format = "default")
-    #         continent_name = pycountry.country_alpha2_to_continent_code(country_code)
-    #         movie_details["production_country_group"].append({"name":continent_name})
-
     return movie_details
 
-# def find_continent(country_code):
-#
-#     for country_dict in country_info.countries:
-#         if country_dict["code"] == country_code:
-#             return country_dict["continent"]
 
 # Main function
 def main():
-
+    """
+    Get films for letterbox_data. Then use the tmdb api to get details about all these films.
+    Finally, create a countries list by continent file.
+    """
     result = {}
 
-    films = json_utils.read_from_file("letterbox_data/test_all_films.json")
+    # films = json_utils.read_from_file("letterbox_data/films.json") # - for films
+    films = json_utils.read_from_file("letterbox_data/test_all_films.json") # - for test films
     i = 1
 
+    # get all details of the films present in the films file, from the tmdb_api
     for lid in films:
         film = films[lid]
         if film == None:
@@ -144,9 +125,11 @@ def main():
         json_utils.write_to_file(result, "tmdb_film_details.json")
 
 
+    # Get the manual file created of continent_country_pairs
     continents_countries = {}
     country_groups = json_utils.read_from_file("continent_country_pairs.json")
 
+    # Create a list of countries in each continent (NOTE: another team member needs this file)
     for country_dict in country_groups:
         continent = country_dict["continent"]
         country = country_dict["country"]
@@ -154,6 +137,7 @@ def main():
             continents_countries[continent] = []
         continents_countries[continent].append(country)
 
+    # Write the list of countries by continent to a file (another team member needs this file)
     json_utils.write_to_file(continents_countries, "countries_by_continent.json")
 
 

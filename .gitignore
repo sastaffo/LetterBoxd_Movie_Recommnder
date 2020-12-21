@@ -1,0 +1,17 @@
+# This Folder's .DS_Store (macOS stuff)
+.DS_Store
+
+# DS_Stores in all sub-folders (macOS stuff)
+*/.DS_Store
+
+# The pytest cache
+.pytest_cache/
+
+# The pycache
+__pycache__/
+
+# Python byte code files
+*.pyc
+
+# Private files
+keys.py

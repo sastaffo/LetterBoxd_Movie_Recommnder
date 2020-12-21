@@ -17,13 +17,16 @@ def get_refined_list(films):
     # Iterate through list of dicts, create smaller dicts by taking specific fields and append to a list
     refined_list = []
     for film in films:
-        if film["user_lid"] == None or film["film_lid"] == None or film["user_rating_for_film"] == None:
+        if "user_lid" not in film or "film_lid" not in film or "user_rating_for_film" not in film:
             continue
-        refined_dict = {}
-        refined_dict["user_lid"] = film["user_lid"]
-        refined_dict["film_lid"] = film["film_lid"]
-        refined_dict["user_rating_for_film"] = film["user_rating_for_film"]
-        refined_list.append(refined_dict)
+        elif type(film["user_lid"]) == type(None) or type(film["film_lid"]) == type(None) or type(film["user_rating_for_film"]) == type(None):
+            continue
+        else:
+            refined_dict = {}
+            refined_dict["user_lid"] = film["user_lid"]
+            refined_dict["film_lid"] = film["film_lid"]
+            refined_dict["user_rating_for_film"] = film["user_rating_for_film"]
+            refined_list.append(refined_dict)
 
     return refined_list
 

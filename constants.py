@@ -1,3 +1,7 @@
+"""
+@author: Shaun
+"""
+
 import keys
 
 API_KEY = keys.TMDB_KEY
@@ -9,8 +13,5 @@ TMDB_COMPANY_URL = "{url}/company/{company_id}?api_key={key}".format(url = TMDB_
 
 MOVIE_KEYS = [ "belongs_to_collection", "budget", "original_language", "production_companies", "production_countries", "release_date", "revenue", "runtime" ]
 
-LIST_KEYS = { "production_companies": ["name", "id"],
-               "production_countries": ["name"] }
-
-# production_companies(array) -> name, id
-# production_countries (array) -> name
+LIST_KEYS = { "production_companies": ["name", "id"], # production_companies(array) -> name, id
+               "production_countries": ["name"] } # production_countries (array) -> name

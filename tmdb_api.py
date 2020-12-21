@@ -1,3 +1,7 @@
+"""
+@author: Shaun
+"""
+
 import requests
 
 import helper
@@ -6,13 +10,8 @@ import helper
 def get_selective_movie_details(movie_id, details, list_details):
     """
     Gets the specific movie details from all the movie details. Movie specified by the movie_id
-
-    :param movie_id:
-    :param details:
-    :param list_details:
-    :return:
     """
-    ## TODO: this one separate?
+
     movie_details = __get_movie_details(movie_id)
     movie_details = helper.trim_dict(movie_details, details, list_details)
 
@@ -40,6 +39,9 @@ def __get_movie_details(movie_id):
 
 
 def get_parent_company(company_id):
+    """
+    Get parent company of the company by the company id provided
+    """
 
     request = helper.get_company_url(company_id)
     response = requests.request("GET", request)

@@ -6,7 +6,7 @@
 
 ```collab_filtering``` - Use the refined data file created by the code file above and performs collaborative filtering based on that data
 
-        
+
 ### Run     
 
 1. Creating a refined list first:     
@@ -17,7 +17,7 @@
 python filter_data.py
 ```
 
-2. Run collaborative filtering on the refined list   
+2. Run collaborative filtering using the refined list   
 ```
 python collab_filtering.py
 ```

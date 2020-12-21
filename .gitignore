@@ -1,0 +1,17 @@
+# This Folder's .DS_Store
+.DS_Store
+
+# DS_Stores in all sub-folders
+*/.DS_Store
+
+# This folder's pytest cache
+.pytest_cache/
+
+# This folder's pycache
+__pycache__/
+
+# All byte code files
+*.pyc
+
+# Private files
+keys.py

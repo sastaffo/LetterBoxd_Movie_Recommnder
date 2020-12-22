@@ -40,5 +40,5 @@ def merge_users(dir_path, output_file):
         print(json_format, file=f)
 
 if __name__ == '__main__':
-    merge_films("../test_films", "../test_all_films.json")
-    merge_users("../test_users", "../test_users.json")
+    merge_films("films", "all_film_data/film_letterboxd_details.json")
+    merge_users("users", "users.json")

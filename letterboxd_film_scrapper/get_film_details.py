@@ -61,14 +61,14 @@ def iterate_through_genres(genres_folder):
         get_film_details_for_genre(genre_films, genre_list_of_films)
         
         print("Outputting results for %s"%(genre_list_of_films['name']))
-        output_to_json("test_users/users_%s"%(genre_list_of_films['name']), users)
-        output_to_json("test_films/films_%s"%(genre_list_of_films['name']), genre_films)
+        output_to_json("users/users_%s"%(genre_list_of_films['name']), users)
+        output_to_json("films/films_%s"%(genre_list_of_films['name']), genre_films)
 
         
         genre_wait_time = random.randint(0, 20)
         time.sleep(genre_wait_time)
     # Output a list of films which we couldn't get the details of
-    output_to_json("invalid_films/test_invalid_films_first_half", invalid_film_list)
+    output_to_json("invalid_films/invalid_films", invalid_film_list)
             
 def get_film_details_for_genre(films, genre_list_of_films):
     film_list = genre_list_of_films['film_list']
@@ -173,10 +173,10 @@ def get_info_in_curly_brackets(info):
     return json_output
 
 def output_to_json(filename, obj):
-    with open("../%s.json"%(filename), 'w') as f:
+    with open("%s.json"%(filename), 'w') as f:
         json_format = jsonpickle.encode(obj, unpicklable=False)
         print(json_format, file=f)
 
 if __name__ == '__main__':
-    iterate_through_genres("../test_film_genres")
+    iterate_through_genres("genre_films")
     #export_details_for_film_url("https://letterboxd.com/film/shrek/")

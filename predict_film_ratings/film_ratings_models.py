@@ -60,10 +60,8 @@ def read_in_data():
     number_of_films = len(films)
     
     # Add fields
-    # TODO change system to instead use users ratings and information about users
-    # TODO still need to add information such as name(maybe), release decade(maybe could be done using one hot encoding),
-    # production countries (maybe done using one hot encoding), revenue (may not be present for all), profit, production_country_group
-    # (maybe related to users or one hot encoding), original(maybe related to users or one hot encoding)
+    # TODO still need to add information such as name(maybe), release decade(maybe done using one hot encoding),
+    # production countries (maybe done using one hot encoding), revenue and profit (may not be present for all).
     likes = np.zeros(number_of_films).reshape(number_of_films, 1)
     views = np.zeros(number_of_films).reshape(number_of_films, 1)
     rating_count = np.zeros(number_of_films).reshape(number_of_films, 1)
@@ -106,10 +104,9 @@ def read_in_data():
     multi_class_genres = mlb.fit_transform(genre_lists)
     print(mlb.classes)
     
-    multi_class_studios = mlb.fit_transform(studio_lists)
-
     features = np.column_stack(feature_list)
     features = np.concatenate((multi_class_genres, features), axis=1)
+    #multi_class_studios = mlb.fit_transform(studio_lists)
     #features = np.concatenate((multi_class_studios, features), axis=1)    # Currently damaging performance
     
     return features, avg_rating

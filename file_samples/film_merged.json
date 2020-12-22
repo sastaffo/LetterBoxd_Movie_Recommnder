@@ -1,0 +1,28 @@
+"438511": {
+	"name": "soul",
+	"url": "/film/soul-2020/",
+	"lid": "438511",
+	"tmdb_id": "508442",
+	"number_of_ratings": 797,
+	"avg_rating": 4.09,
+	"genres": ["adventure", "music", "family", "comedy", "animation", "fantasy"],
+	"director": "pete-docter",
+	"actor": ["jamie-foxx", "tina-fey", "ahmir-khalib-thompson", "phylicia-rashad", "daveed-diggs", "john-ratzenberger", "richard-ayoade", "graham-norton", "rachel-house", "alice-braga", "angela-bassett"],
+	"number_of_likes": 477,
+	"number_of_views": 1390,
+	"release_decade": 2020,
+	"production_companies": [2, 3],
+	"production_countries": ["United States of America"],
+	"revenue": 0,
+	"profit": 0,
+	"movie_age": 0,
+	"release_date":
+	"2020-12-25",
+	"budget": 0,
+	"release_year": 2020,
+	"production_country_group": ["North America"],
+	"runtime": 102,
+	"in_franchise": false,
+	"belongs_to_collection": null,
+	"original_language": "en"
+}

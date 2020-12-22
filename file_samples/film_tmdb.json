@@ -1,0 +1,22 @@
+"78126": {
+	"release_decade": 2010,
+	"production_companies": [
+		{"name": "CJ Entertainment", "id": 7036},
+		{"name": "Directors", "id": 22151},
+		{"name": "SK Planet", "id": 22152}
+	],
+	"production_countries": ["South Korea"],
+	"revenue": 0,
+	"profit": -25500000,
+	"movie_age": 9,
+	"release_date": "2011-12-21",
+	"budget": 25500000,
+	"name": "My Way",
+	"tmdb_id": "94047",
+	"release_year": 2011,
+	"production_country_group": ["Asia"],
+	"runtime": 137,
+	"in_franchise": false,
+	"belongs_to_collection": null,
+	"original_language": "ko"
+}

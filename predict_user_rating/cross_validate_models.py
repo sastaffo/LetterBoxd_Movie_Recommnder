@@ -56,6 +56,6 @@ if __name__ == '__main__':
     #x, y = read_in_csv_file("training_points/pairs_0.csv", parameter_list) # Can test with just one file
     x, y = read_in_csv_files("training_points", parameter_list)
     cross_validate_penalty_parameter(x, y, "Lasso Regression", create_lasso_regression, [0.1, 1, 10, 100, 1000])
-    cross_validate_penalty_parameter(x, y, "Ridge Regression", create_ridge_regression, [0.0001, 0.001, 0.01, 0.1, 1, 10])
+    cross_validate_penalty_parameter(x, y, "Ridge Regression", create_ridge_regression, [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10])
     cross_validate_nearest_neighbours_parameter(x, y, "K nearest neighbours", [1, 10, 100, 200, 500])
     display_graphs()

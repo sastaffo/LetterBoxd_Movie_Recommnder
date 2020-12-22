@@ -6,7 +6,7 @@ Created on 21 Dec 2020
 from math import log10
 import matplotlib.pyplot as plt
 
-legend_location = 4
+legend_location = 1
 
 def plot_mean_with_deviation(title, x_axis_label, cross_validation_numbers, mean_errors, standard_deviations):
     ax = plt.figure().add_subplot(111)

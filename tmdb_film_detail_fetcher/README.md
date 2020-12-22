@@ -5,7 +5,7 @@ This gets film details and test film details for the films from the files in let
 
 ### Run    
 
-**NB: You need a ```keys.py``` file with the variable ```TMDB_KEY``` containing your key for the TMDB API.** This has not been uploaded by us due to security reasons    
+**NB: You need a ```keys.py``` file in this directory, with the variable ```TMDB_KEY``` containing your key for the TMDB API.** This has not been uploaded by us due to security reasons    
 
 ```
 python main.py

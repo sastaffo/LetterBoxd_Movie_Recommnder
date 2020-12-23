@@ -96,7 +96,7 @@ def evaluate_all_models(x_train, y_train, x_test, y_test, parameter_list):
     evaluate_lasso_regression(x_train, y_train, x_test, y_test, 1)
     evaluate_lasso_regression(x_train, y_train, x_test, y_test, 10)
     evaluate_lasso_regression(x_train, y_train, x_test, y_test, 100)
-    evaluate_ridge_regression(x_train, y_train, x_test, y_test, 0.1)
+    evaluate_ridge_regression(x_train, y_train, x_test, y_test, 0.0001)
     evaluate_ridge_regression(x_train, y_train, x_test, y_test, 1)
     evaluate_knn_regression(x_train, y_train, x_test, y_test, 100)
     

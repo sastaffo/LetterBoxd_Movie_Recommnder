@@ -1,10 +1,13 @@
 # Item-based Collaborative Filtering    
+*author: ShaunJose (Shaun José 16308185)*
 
 ### Description   
 
-```filter_data.py``` - Takes all files data from a folder 'user_film_merge' and creates a refined list of these files (only the data needed for item-based collaboraitve filtering)   
+`filter_data.py`
+Takes all files data from a folder 'user_film_merge' and creates a refined list of these files (only the data needed for item-based collaboraitve filtering)   
 
-```collab_filtering``` - Use the refined data file created by the code file above and performs collaborative filtering based on that data
+`collab_filtering`
+Use the refined data file created by the code file above and performs collaborative filtering based on that data
 
 
 ### Run     

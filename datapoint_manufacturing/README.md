@@ -1,5 +1,5 @@
 # Manufacturing Datapoints
-
+*author: sastaffo (Sarah Stafford-Langan 16316349)*
 ### Description   
 Processes the files containing User data (collected by Sarah(sastaffo)) and Film data (collected by Philip(XanthusXX) and Shaun(ShaunJose)) to create datapoints to train our models.
 

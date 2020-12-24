@@ -1,4 +1,6 @@
 # LetterBoxd Movie Recommnder
+*author: XanthusXX (Philip Bradish 16339490)*
+
 Code for scraping the film data off Letterboxd and combining all the film data together.
 
 * get_failed_films.py - Deprecated script for getting films which failed the first pass of the system using the console output. No longer needed.

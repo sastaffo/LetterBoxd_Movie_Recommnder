@@ -1,4 +1,5 @@
 # User Collection
+*author: sastaffo (Sarah Stafford-Langan 16316349)*
 
 ### Description   
 Collects usernames and user information from LetterBoxd for use in training and testing models.

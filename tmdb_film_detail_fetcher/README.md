@@ -1,4 +1,5 @@
 # Fetching movie details   
+*author: ShaunJose (Shaun José 16308185)*
 
 ### Description   
 This gets film details and test film details for the films from the files in letterbox data (which were retrieved by Philip aka XanthusXX)   

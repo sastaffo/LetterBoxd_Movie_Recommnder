@@ -205,42 +205,42 @@ csv_header = csv_header_str.split(",")
 
 test_src_path = folder_path + "test_valid_user_film_merge/test_TYPE_users_X00_X99.json"
 test_dst_path = folder_path + "test_user_film_pairs_csv/test_TYPE_X00_X99_pairs.csv"
-def some_test_pairs_to_csv(max, min=0, ut="pop"):
+def some_test_pairs_to_csv(max, min=0, user_type="pop"):
     start = dt.now()
     print(start)
     for i in range(min, max+1):
         print(i, end=" ")
-        i_path = test_src_path.replace("TYPE", ut).replace("X", str(i))
-        i_dst_path = test_dst_path.replace("TYPE", ut).replace("X", str(i))
+        i_path = test_src_path.replace("TYPE", user_type).replace("X", str(i))
+        i_dst_path = test_dst_path.replace("TYPE", user_type).replace("X", str(i))
         file_to_csv(i_path)
     #end for
-    print("done with", ut, min, "-", max, "in:", (dt.now()-start))
+    print("done with", user_type, min, "-", max, "in:", (dt.now()-start))
     #end
 #end
 
-#some_test_pairs_to_csv(max=19, min=0, ut="pop")
-#some_test_pairs_to_csv(max=23, min=20, ut="pop")
-#some_test_pairs_to_csv(max=13, min=0, ut="gen")
+#some_test_pairs_to_csv(max=19, min=0, user_type="pop")
+#some_test_pairs_to_csv(max=23, min=20, user_type="pop")
+#some_test_pairs_to_csv(max=13, min=0, user_type="gen")
 
 csv_header_str = read_f(folder_path+"header.csv")
 csv_header = csv_header_str.split(",")
 
-def some_pairs_to_csv(max, min=0, ut="pop"):
+def some_pairs_to_csv(max, min=0, user_type="pop"):
     start = dt.now()
     print(start)
     for i in range(min, max+1):
         print(i, end=" ")
-        i_path = pairs_json_path.replace("TYPE", ut).replace("X", str(i))
+        i_path = pairs_json_path.replace("TYPE", user_type).replace("X", str(i))
         i_dst_path = i_path.replace("valid_user_film_merge", "user_film_pairs_csv").replace("json", "csv")
         file_to_csv(i_path, i_dst_path)
     #end for
-    print("done with", ut, min, "-", max, "in:", (dt.now()-start))
+    print("done with", user_type, min, "-", max, "in:", (dt.now()-start))
     #end
 #end
 
-#some_pairs_to_csv(max=38, min=0, ut="pop")
-#some_pairs_to_csv(max=27, min=25, ut="pop")
-#some_pairs_to_csv(max=57, min=55, ut="gen")
+#some_pairs_to_csv(max=38, min=0, user_type="pop")
+#some_pairs_to_csv(max=27, min=25, user_type="pop")
+#some_pairs_to_csv(max=57, min=55, user_type="gen")
 
 def all_pairs_to_csv():
     for i in range(60):
@@ -261,9 +261,6 @@ def all_pairs_to_csv():
     print("done")
     return
 
-#p = folder_path + "inv_json/test_gen_users_000_099.json"
-#s = read_f(p)
-#j = json.loads(s)
 
 """# merge_csvs"""
 
@@ -294,7 +291,7 @@ def merging(a_path, b_path, c_path, d_path):
 csv_header_str = read_f(folder_path+"header.csv")
 csv_header = csv_header_str.split(",")
 
-def test_merge_csvs():
+def merge_test_csvs():
     src_generic = folder_path + "test_user_film_pairs_csv/test_TYPE_X00_X99_pairs.csv"
     dst_generic = folder_path + "test_merged_csv_pairs/test_pairs_ZZ.csv"
     j = 0
@@ -330,7 +327,7 @@ def test_merge_csvs():
     print("finished gen")
     return
 
-#test_merge_csvs()
+#merge_test_csvs()
 
 csv_header_str = read_f(folder_path+"header.csv")
 csv_header = csv_header_str.split(",")

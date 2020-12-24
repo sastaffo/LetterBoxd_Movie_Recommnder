@@ -450,11 +450,11 @@ print(dt.now())
 user_file_path_training = folder_path + "all_users_unzip/TYPE_users_X00_X99.json"
 dst_path_training = folder_path + "writing_pairs/TYPE_X00_X99_film_pairs.json"
 
-def user_film_pairs_for_file(index, ut="pop", user_file_path=user_file_path_training, dst_path=dst_path_training, valid_folder="valid_user_film_merge"):
+def user_film_pairs_for_file(index, user_type="pop", user_file_path=user_file_path_training, dst_path=dst_path_training, valid_folder="valid_user_film_merge"):
     start = dt.now()
-    print(ut, index, start)
-    this_dstpath = dst_path.replace("TYPE", ut).replace("X", str(index))
-    f_str = read_f(user_file_path.replace("TYPE", ut).replace("X", str(index)))
+    print(user_type, index, start)
+    this_dstpath = dst_path.replace("TYPE", user_type).replace("X", str(index))
+    f_str = read_f(user_file_path.replace("TYPE", user_type).replace("X", str(index)))
     all = json.loads(f_str)
     write_f(this_dstpath, "[")
     first_user = True
@@ -502,36 +502,36 @@ p = folder_path + "inv_json/test_pop_users_1500_1599.json"
 s = read_f(p)
 j = json.loads(s)
 
-def some_pairs(max, min=0, ut="pop"):
+def some_pairs(max, min=0, user_type="pop"):
     start = dt.now()
     print(start)
     for i in range(min, max+1):
-        user_film_pairs_for_file(index=i, ut=ut)
+        user_film_pairs_for_file(index=i, user_type=user_type)
     #end for
-    print("done with", ut, min, "-", max, "in:", (dt.now()-start))
+    print("done with", user_type, min, "-", max, "in:", (dt.now()-start))
     #end
 #end
 
-#some_pairs(max=5, min=5, ut="pop")
-#some_pairs(max=57, min=25, ut="gen")
+#some_pairs(max=5, min=5, user_type="pop")
+#some_pairs(max=57, min=25, user_type="gen")
 
-def some_test_pairs(max, min=0, ut="pop"):
+def some_test_pairs(max, min=0, user_type="pop"):
     user_path_testing = folder_path + "safety/test_TYPE_users_X00_X99.json"
     dst_path_testing = folder_path + "writing_pairs/test_TYPE_users_X00_X99.json"
     valid_folder = "valid_test_user_film_merge"
     start = dt.now()
     print(start)
     for i in range(min, max+1):
-        user_film_pairs_for_file(index=i, ut=ut, user_file_path=user_path_testing, dst_path=dst_path_testing, valid_folder=valid_folder)
+        user_film_pairs_for_file(index=i, user_type=user_type, user_file_path=user_path_testing, dst_path=dst_path_testing, valid_folder=valid_folder)
     #end for
-    print("done with", ut, min, "-", max, "in:", (dt.now()-start))
+    print("done with", user_type, min, "-", max, "in:", (dt.now()-start))
     #end
 #end
 
-#some_test_pairs(max=23, min=0, ut="pop")
-#some_test_pairs(max=13, min=1, ut="gen")
+#some_test_pairs(max=23, min=0, user_type="pop")
+#some_test_pairs(max=13, min=1, user_type="gen")
 
-#some_test_pairs(max=15, min=15, ut="pop")
+#some_test_pairs(max=15, min=15, user_type="pop")
 
 """#### find bottleneck"""
 

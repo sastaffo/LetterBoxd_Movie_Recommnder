@@ -199,23 +199,9 @@ url = "url"
 name = "name"
 
 class LBoxd_User():
-    def __init__(self, maps_api_key, profile_url=None, username=None, time_log=False):
-        self.lid = None
-        self.profile_url = None
-        if profile_url is not None:
-            if profile_url[-1] == "/": self.profile_url = profile_url
-            else: self.profile_url = (profile_url + "/")
-
-            self._generate_lid()
-            if username is not None and username != self.lid: raise ValueError("URL does not match username provided")
-
-        elif profile_url is None and username is not None:
-            self.lid = username
-            self.profile_url = (lboxd_url + "/" + self.lid + "/")
-        else:
-            error_s = ("please initialise LBoxd_User object with one of profile_url and username\n" + "Found: profile_url=" + profile_url + " and username=" + username)
-            raise ValueError(error_s)
-        #end if
+    def __init__(self, maps_api_key, username=None, time_log=False):
+        self.lid = username
+        self.profile_url = (lboxd_url + "/" + self.lid + "/")
 
         self.time_log = time_log
         setup_time_start = dt.now()

@@ -1,9 +1,11 @@
 # LetterBoxd Movie Recommnder
 **authors:**
-*XanthusXX (Philip Bradish 16339490)*
-*ShaunJose (Shaun José 16308185)*
-*sastaffo (Sarah Stafford-Langan 16316349)*
-Movie recommender system that uses data from Letterboxd and TMDB.
+* *XanthusXX (Philip Bradish 16339490)*
+* *ShaunJose (Shaun José 16308185)*
+* *sastaffo (Sarah Stafford-Langan 16316349)*
+
+
+**Movie recommender system that uses data from Letterboxd and TMDb.**
 
 Different folders contain different parts of the project.
 
